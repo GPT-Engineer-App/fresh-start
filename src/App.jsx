@@ -11,8 +11,7 @@ function App() {
     <Router>
       <Routes>
         <Route exact path="/" element={<Index />} />
-      <Route path="/user-data" element={<UserData />} />
-      <Route path="/login" element={<Login />} />
+        <Route path="/user-data" element={<UserData />} />
       </Routes>
       {session ? (
         <Button onClick={logout} colorScheme="teal" mt={2}>Logout</Button>
