@@ -1,7 +1,18 @@
-import { Container, Text, VStack, Heading, Button } from "@chakra-ui/react";
+import { useEffect } from 'react';
+import { useNavigate } from 'react-router-dom';
+import { Container, Text, VStack, Heading, Button, Box } from "@chakra-ui/react";
+import { SupabaseAuthUI, useSupabaseAuth } from '../integrations/supabase/auth.jsx';
 import { FaRocket } from "react-icons/fa";
 
 const Index = () => {
+  const { session } = useSupabaseAuth();
+  const navigate = useNavigate();
+
+  useEffect(() => {
+    if (session) {
+      navigate('/user-data');
+    }
+  }, [session, navigate]);
   return (
     <Container centerContent maxW="container.md" height="100vh" display="flex" flexDirection="column" justifyContent="center" alignItems="center">
       <VStack spacing={4}>
@@ -10,6 +21,11 @@ const Index = () => {
         <Button rightIcon={<FaRocket />} colorScheme="teal" size="lg">
           Get Started
         </Button>
+        {!session && (
+          <Box width="100%" maxWidth="md" mt={8}>
+            <SupabaseAuthUI />
+          </Box>
+        )}
       </VStack>
     </Container>
   );
