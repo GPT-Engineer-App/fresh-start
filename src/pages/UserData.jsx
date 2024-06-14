@@ -1,12 +1,12 @@
 import { useState } from 'react';
 import { Container, Heading, VStack, Button, Input, Textarea, Box, Text } from "@chakra-ui/react";
-import { useUserDataById, useAddUserData, useUpdateUserData, useDeleteUserData } from '../integrations/supabase/index.js';
+import { useUserDataByUUID, useAddUserData, useUpdateUserData, useDeleteUserData } from '../integrations/supabase/index.js';
 import { useSupabaseAuth } from '../integrations/supabase/auth.jsx';
 
 const UserData = () => {
   const { session } = useSupabaseAuth();
-  const userId = session?.user?.id;
-  const { data, isLoading, isError } = useUserDataById(userId);
+  const userId = session.user.id;
+  const { data, isLoading, isError } = useUserDataByUUID(userId);
   const addUserData = useAddUserData();
   const updateUserData = useUpdateUserData();
   const deleteUserData = useDeleteUserData();

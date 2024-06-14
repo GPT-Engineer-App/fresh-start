@@ -57,9 +57,9 @@ export const useUserData = () => useQuery({
     queryKey: ['user_data'],
     queryFn: () => fromSupabase(supabase.from('user_data').select('*')),
 });
-export const useUserDataById = (id) => useQuery({
-    queryKey: ['user_data', id],
-    queryFn: () => fromSupabase(supabase.from('user_data').select('*').eq('id', id)),
+export const useUserDataByUUID = (uuid) => useQuery({
+    queryKey: ['user_data', uuid],
+    queryFn: () => fromSupabase(supabase.from('user_data').select('*').eq('user_id', uuid)),
 });
 export const useAddUserData = () => {
     const queryClient = useQueryClient();
