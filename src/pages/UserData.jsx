@@ -24,8 +24,8 @@ const UserData = () => {
     setUpdateData({ id: '', user_data: '', user_id: userId });
   };
 
-  const handleDelete = (id) => {
-    deleteUserData.mutate(id);
+  const handleDelete = (user_id) => {
+    deleteUserData.mutate(user_id);
   };
 
   if (isLoading) return <div>Loading...</div>;
@@ -67,7 +67,7 @@ const UserData = () => {
             <Box key={item.id} p={4} borderWidth={1} borderRadius="md" width="100%">
               <Text>ID: {item.id}</Text>
               <Text>Data: {item.user_data}</Text>
-              <Button onClick={() => handleDelete(item.id)} colorScheme="red" mt={2}>Delete</Button>
+              <Button onClick={() => handleDelete(item.user_id)} colorScheme="red" mt={2}>Delete</Button>
             </Box>
           ))}
         </Box>
