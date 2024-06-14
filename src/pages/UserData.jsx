@@ -1,24 +1,27 @@
 import { useState } from 'react';
 import { Container, Heading, VStack, Button, Input, Textarea, Box, Text } from "@chakra-ui/react";
-import { useUserData, useAddUserData, useUpdateUserData, useDeleteUserData } from '../integrations/supabase/index.js';
+import { useUserDataById, useAddUserData, useUpdateUserData, useDeleteUserData } from '../integrations/supabase/index.js';
+import { useSupabaseAuth } from '../integrations/supabase/auth.jsx';
 
 const UserData = () => {
-  const { data, isLoading, isError } = useUserData();
+  const { session } = useSupabaseAuth();
+  const userId = session?.user?.id;
+  const { data, isLoading, isError } = useUserDataById(userId);
   const addUserData = useAddUserData();
   const updateUserData = useUpdateUserData();
   const deleteUserData = useDeleteUserData();
 
-  const [newData, setNewData] = useState({ user_data: '' });
-  const [updateData, setUpdateData] = useState({ id: '', user_data: '' });
+  const [newData, setNewData] = useState({ user_data: '', user_id: userId });
+  const [updateData, setUpdateData] = useState({ id: '', user_data: '', user_id: userId });
 
   const handleAdd = () => {
     addUserData.mutate(newData);
-    setNewData({ user_data: '' });
+    setNewData({ user_data: '', user_id: userId });
   };
 
   const handleUpdate = () => {
     updateUserData.mutate(updateData);
-    setUpdateData({ id: '', user_data: '' });
+    setUpdateData({ id: '', user_data: '', user_id: userId });
   };
 
   const handleDelete = (id) => {
@@ -38,7 +41,7 @@ const UserData = () => {
           <Textarea
             placeholder="Enter new user data"
             value={newData.user_data}
-            onChange={(e) => setNewData({ user_data: e.target.value })}
+            onChange={(e) => setNewData({ user_data: e.target.value, user_id: userId })}
           />
           <Button onClick={handleAdd} colorScheme="teal" mt={2}>Add Data</Button>
         </Box>
